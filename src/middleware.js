@@ -5,12 +5,11 @@ import {
 } from './';
 
 
-export default (store) => {
+export default ({
+  rpcClientOptions
+}) => (store) => {
   let counter = 0;
-  const rpc = new RPCClient({
-    url: '/rpc',
-    sendCredentials: 'same-origin',
-  });
+  const rpc = new RPCClient(rpcClientOptions);
   return next => (action) => {
     next(action);
     switch (action.type) {
