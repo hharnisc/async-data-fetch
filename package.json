@@ -1,6 +1,6 @@
 {
   "name": "@hharnisc/async-data-fetch",
-  "version": "1.2.4-beta02",
+  "version": "1.2.4",
   "description": "Fetch data from RPC backend",
   "main": "lib/index.js",
   "scripts": {
