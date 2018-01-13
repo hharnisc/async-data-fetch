@@ -28,7 +28,7 @@ export default ({
             name: action.name,
             args,
             id,
-            result,
+            result: action.format ? action.format(result) : result,
           })))
           .catch((error) => {
             store.dispatch(actions.fetchFail({
