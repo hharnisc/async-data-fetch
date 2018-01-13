@@ -13,10 +13,11 @@ export default (state = {}, action) => {
 };
 
 export const actions = {
-  fetch: ({ name, args }) => ({
+  fetch: ({ name, args, format }) => ({
     type: actionTypes.FETCH,
     name,
     args,
+    format,
   }),
   fetchStart: ({ name, args, id }) => ({
     type: `${name}_${actionTypes.FETCH_START}`,
