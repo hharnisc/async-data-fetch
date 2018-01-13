@@ -9,7 +9,11 @@ describe('middleware', () => {
     const action = {
       type: 'INIT',
     };
-    middleware()(next)(action);
+    middleware({
+      rpcClientOptions: {
+        url: 'http://somerpc/'
+      }
+    })()(next)(action);
     expect(next)
       .toBeCalled();
   });
@@ -30,7 +34,11 @@ describe('middleware', () => {
       name,
       args,
     };
-    middleware(store)(() => {})(action);
+    middleware({
+      rpcClientOptions: {
+        url: 'http://somerpc/'
+      }
+    })(store)(() => {})(action);
     expect(store.dispatch)
       .toBeCalledWith({
         type: `${name}_${actionTypes.FETCH_START}`,
@@ -55,7 +63,11 @@ describe('middleware', () => {
       name,
       args,
     };
-    const middlewareWithStore = middleware(store);
+    const middlewareWithStore = middleware({
+      rpcClientOptions: {
+        url: 'http://somerpc/'
+      }
+    })(store);
     middlewareWithStore(() => {})(action);
     middlewareWithStore(() => {})(action);
     expect(store.dispatch)
@@ -90,7 +102,11 @@ describe('middleware', () => {
         asyncDataFetch: {},
       }),
     };
-    middleware(store)(() => {})(action);
+    middleware({
+      rpcClientOptions: {
+        url: 'http://somerpc/'
+      }
+    })(store)(() => {})(action);
     expect(RPCClient.prototype.call)
       .toBeCalledWith(name, args);
   });
@@ -110,7 +126,11 @@ describe('middleware', () => {
       name,
       args,
     };
-    middleware(store)(() => {})(action);
+    middleware({
+      rpcClientOptions: {
+        url: 'http://somerpc/'
+      }
+    })(store)(() => {})(action);
     await sleep(); // give the event loop a chance to process promise
     expect(store.dispatch)
       .toBeCalledWith({
@@ -119,6 +139,39 @@ describe('middleware', () => {
         args,
         id: 0,
         result: RPCClient.fakeResult,
+      });
+  });
+  it('should dispatch a FETCH_SUCCESS action with formated data', async () => {
+    const store = {
+      dispatch: jest.fn(),
+      getState: () => ({
+        asyncDataFetch: {},
+      }),
+    };
+    const name = 'fake rpc';
+    const args = {
+      test: 'yes',
+    };
+    const formatedData = 'FORMAT';
+    const action = {
+      type: actionTypes.FETCH,
+      name,
+      args,
+      format: () => formatedData,
+    };
+    middleware({
+      rpcClientOptions: {
+        url: 'http://somerpc/'
+      }
+    })(store)(() => {})(action);
+    await sleep(); // give the event loop a chance to process promise
+    expect(store.dispatch)
+      .toBeCalledWith({
+        type: `${name}_${actionTypes.FETCH_SUCCESS}`,
+        name,
+        args,
+        id: 0,
+        result: formatedData,
       });
   });
   it('should dispatch a FETCH_FAIL action', async () => {
@@ -137,7 +190,11 @@ describe('middleware', () => {
       name,
       args,
     };
-    middleware(store)(() => {})(action);
+    middleware({
+      rpcClientOptions: {
+        url: 'http://somerpc/'
+      }
+    })(store)(() => {})(action);
     await sleep(); // give the event loop a chance to process promise
     expect(store.dispatch)
       .toBeCalledWith({
