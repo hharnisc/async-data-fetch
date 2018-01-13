@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
+    "test-watch": "jest --watch",
     "build": "babel src -d lib",
     "prepublish": "babel src -d lib"
   },

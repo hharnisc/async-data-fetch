@@ -47,6 +47,20 @@ describe('reducer', () => {
             name,
           });
       });
+      it('should send format in action', () => {
+        const args = {
+          test: 'yes',
+        };
+        const name = 'fake rpc';
+        const format = 'format';
+        expect(actions.fetch({ name, args, format }))
+          .toEqual({
+            type: actionTypes.FETCH,
+            name,
+            args,
+            format,
+          });
+      });
     });
     describe('$action_FETCH_START', () => {
       it('should create an action', () => {
