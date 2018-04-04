@@ -1,6 +1,6 @@
 {
   "name": "@hharnisc/async-data-fetch",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Fetch data from RPC backend",
   "main": "lib/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "then-sleep": "^1.0.1"
   },
   "dependencies": {
-    "@hharnisc/micro-rpc-client": "^0.1.2"
+    "@hharnisc/micro-rpc-client": "^0.1.3"
   },
   "babel": {
     "presets": [
